@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable class-methods-use-this */
 import upload from './upload';
 import markupTicket, { markupContentDescript } from './markup';
 

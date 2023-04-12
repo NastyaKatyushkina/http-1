@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 export default function upload(method, body = null) {
   const URL = 'http://localhost:7070/';
 
