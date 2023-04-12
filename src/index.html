@@ -1,35 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>doc</title>
-</head>
-<body>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>App</title>
+  </head>
+  <body>
     <div class="container">
-        <div class="tickets bg-light p-5">
-            <div class="tickets-header row mb-3">
-                <div class="col d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ticketModal" id="createTicketBtn" data-title="Добавить тикет" data-method="createTicket">Добавить тикет</button>
-                </div>
-            </div>
-            <div class="tickets-list">
-                <div class="tickets-list__in-progress"></div>               
-                <div class="tickets-list__done"></div>
-            </div>
+      <button id="add-ticket-button">Добавить тикет</button>
+      <div id="tickets-list"></div>
+      <div id="create-ticket-modal" class="hidden modal">
+        <span>Добавить тикет</span>
+        <form id="create-ticket-form">
+          <input name="name" type="text" placeholder="Описание" />
+          <textarea
+            name="description"
+            type="text"
+            placeholder="Подробное описание"
+          ></textarea>
+          <div class="actions">
+            <button class="modal-close">Отмена</button>
+            <button type="submit">Ok</button>
+          </div>
+        </form>
+      </div>
+      <div id="edit-ticket-modal" class="hidden modal">
+        <span>Изменить тикет</span>
+        <form id="edit-ticket-form">
+          <input name="name" type="text" placeholder="Описание" />
+          <textarea
+            name="description"
+            type="text"
+            placeholder="Подробное описание"
+          ></textarea>
+          <div class="actions">
+            <button class="modal-close">Отмена</button>
+            <button type="submit">Ok</button>
+          </div>
+        </form>
+      </div>
+      <div id="delete-ticket-modal" class="hidden modal">
+        <span>Удалить тикет </span>
+        <span
+          >Вы уверены, что хотите удалить тикет? Это действие необратимо</span
+        >
+        <div class="actions">
+          <button class="modal-close">Отмена</button>
+          <button>OK</button>
         </div>
+      </div>
     </div>
-    <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="ticketModalLabel"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalBody"></div>
-            </div>
-        </div>
-    </div>  
-</body>
+  </body>
 </html>
