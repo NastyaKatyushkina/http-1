@@ -1,4 +1,6 @@
 dist
 coverage
-doc
-webpack.*.js
+docs
+node_modules
+webpack.dev.js
+webpack.common.js

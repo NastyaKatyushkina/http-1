@@ -1,88 +1,267 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable class-methods-use-this */
-import upload from './upload';
-import markupTicket, { markupContentDescript } from './markup';
+import Card from './card';
 
-import modalAddTicket from './modal/modalAddTicket';
-import modalChangeTicket from './modal/modalChangeTicket';
-import modalDeleteTicket from './modal/modalDeleteTicket';
+export default class CardManager {
+  constructor() {
+    this.container = null;
+    this.actualElement = null;
 
-export default class HelpDesk {
-  constructor(listTickets) {
-    this.listTickets = listTickets;
+    this.btnCardDelete = this.btnCardDelete.bind(this);
+    this.btnCardEdit = this.btnCardEdit.bind(this);
+    this.btnCardNotDone = this.btnCardNotDone.bind(this);
+    this.btnCardDone = this.btnCardDone.bind(this);
+
+    this.addNewCard = this.addNewCard.bind(this);
+    this.addCard = this.addCard.bind(this);
+    this.cansel = this.cansel.bind(this);
+    this.canselEdit = this.canselEdit.bind(this);
+    this.canselDel = this.canselDel.bind(this);
+    this.btnText = this.btnText.bind(this);
+    this.cardDelete = this.cardDelete.bind(this);
+    this.cardEdit = this.cardEdit.bind(this);
   }
 
-  init() {
-    upload('allTickets')
-      .then((data) => {
-        data.forEach((ticket) => {
-          this.listTickets.insertAdjacentHTML('beforeend', markupTicket(ticket));
-        });
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-
-    document.addEventListener('click', (e) => this.onClick(e));
+  bindToDOM(container) {
+    this.container = container;
+    this.container.querySelector('.card_add').addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.addNewCard();
+    });
   }
 
-  onClick(e) {
-    const { classList } = e.target;
+  addNewCard() { // всплывает добавить тикет
+    const popover = this.container.querySelector('.popover');
+    const addTiket = this.container.querySelector('.container_add_tiket');
+    addTiket.classList.remove('hidden');
+    popover.classList.remove('hidden');
 
-    if (classList.contains('btn-add-ticket')) { modalAddTicket(); }
-    if (classList.contains('btn-cancel')) { this.closeModal(e); }
+    const btnOk = addTiket.querySelector('.popover_control_ok');
+    const btnCansel = addTiket.querySelector('.popover_control_cancel');
 
-    if (classList.contains('toggle')) { this.statusTicket(e); }
-    if (classList.contains('item__content__name')) { this.getDescriptTicket(e); }
+    btnOk.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.addCard(addTiket);
+      this.cansel(addTiket);
+    });
 
-    if (classList.value === 'change') { modalChangeTicket(e); }
-    if (classList.value === 'delete') { modalDeleteTicket(e); }
+    btnCansel.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.cansel(addTiket);
+    });
   }
 
-  closeModal(e) {
-    e.preventDefault();
-    e.target.closest('.modal').remove();
-  }
+  addCard(tiket) { // добавляет тикет с непустым текстом
+    const text = tiket.querySelector('.tiket_text').value;
+    const description = tiket.querySelector('.tiket_description').value;
 
-  statusTicket(e) {
-    const status = e.target.previousElementSibling;
-
-    if (status.value === 'false') {
-      e.target.classList.add('toggle--true');
-      status.value = true;
-    } else {
-      status.value = false;
-      e.target.classList.remove('toggle--true');
+    if (text === '') {
+      this.cansel(tiket);
+      return;
     }
+    const newcard = new Card(text, description);
+    newcard.createCard();
 
-    const formData = new FormData();
-    formData.set('id', e.target.closest('.item').dataset.id);
-    formData.set('status', status.value);
+    // newcard это объект, надо присвоить саму карточку в разметке
+    const { card } = newcard;
 
-    upload('statusTicket', formData);
+    const btnDelete = card.querySelector('.card_delete');
+    const btnEdit = card.querySelector('.card_edit');
+    const btnNotDone = card.querySelector('.card_not_done');
+    const btnDone = card.querySelector('.card_done');
+    const btnText = card.querySelector('.card_text');
+
+    btnDelete.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardDelete(card);
+    });
+
+    btnEdit.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardEdit(card);
+    });
+
+    btnNotDone.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardNotDone(card);
+    });
+
+    btnDone.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardDone(card);
+    });
+
+    btnText.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnText(card);
+    });
   }
 
-  getDescriptTicket(e) {
-    const item = e.target.closest('.item');
-    const ID = e.target.closest('.item').dataset.id;
+  btnCardDelete(card) { // всплывает удалить тикет
+    const popover = this.container.querySelector('.popover');
+    const delTiket = this.container.querySelector('.container_delete_tiket');
+    delTiket.classList.remove('hidden');
+    popover.classList.remove('hidden');
 
-    upload('ticketById', ID)
-      .then((data) => {
-        const itemContent = item.querySelector('.item__content');
-        const itemDescript = item.querySelector('.item__content__descript');
+    const btnOk = delTiket.querySelector('.popover_control_ok');
+    const btnCansel = delTiket.querySelector('.popover_control_cancel');
 
-        if (!itemDescript
-          && data.description
-          && (item.dataset.id == data.id)) {
-          itemContent.insertAdjacentHTML('beforeend', markupContentDescript(data.description));
-        }
+    btnOk.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.cardDelete(card);
+      this.canselDel(delTiket, card);
+    });
 
-        if (itemDescript && (item.dataset.id == data.id)) {
-          itemDescript.remove();
-        }
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    btnCansel.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.canselDel(delTiket, card);
+    });
+  }
+
+  cardDelete(card) { // отписывается и удаляет карточку
+    const btnDelete = card.querySelector('.card_delete');
+    const btnEdit = card.querySelector('.card_edit');
+    const btnNotDone = card.querySelector('.card_not_done');
+    const btnDone = card.querySelector('.card_done');
+    const btnText = card.querySelector('.card_text');
+
+    btnDelete.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardDelete(card);
+    });
+    btnEdit.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardEdit(card);
+    });
+    btnNotDone.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardNotDone(card);
+    });
+    btnDone.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnCardDone(card);
+    });
+    btnText.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.btnText(card);
+    });
+    card.remove();
+  }
+
+  btnCardNotDone(card) { // ставит галочку сделано
+    this.actualElement = card;
+    const btnNotDone = card.querySelector('.card_not_done');
+    btnNotDone.classList.add('hidden');
+    const btnDone = card.querySelector('.card_done');
+    btnDone.classList.remove('hidden');
+  }
+
+  btnCardDone(card) { // убирает галочку сделано
+    this.actualElement = card;
+    const btnNotDone = card.querySelector('.card_not_done');
+    btnNotDone.classList.remove('hidden');
+    const btnDone = card.querySelector('.card_done');
+    btnDone.classList.add('hidden');
+  }
+
+  btnText(card) { // всплытие описания
+    this.actualElement = card;
+    const description = card.querySelector('.card_description');
+    if (description.classList.contains('hidden')) {
+      description.classList.remove('hidden');
+    } else {
+      description.classList.add('hidden');
+    }
+  }
+
+  btnCardEdit(card) { // всплывает изменить тикет
+    const popover = this.container.querySelector('.popover');
+    const editTiket = this.container.querySelector('.container_edit_tiket');
+    editTiket.classList.remove('hidden');
+    popover.classList.remove('hidden');
+
+    editTiket.querySelector('.tiket_text').value = card.querySelector('.card_text').textContent;
+    editTiket.querySelector('.tiket_description').value = card.querySelector('.card_description').textContent;
+
+    const btnOk = editTiket.querySelector('.popover_control_ok');
+    const btnCansel = editTiket.querySelector('.popover_control_cancel');
+
+    btnOk.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.cardEdit(card, editTiket);
+      this.canselEdit(editTiket, card);
+    });
+
+    btnCansel.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.canselEdit(editTiket, card);// ??не стирает значения и не отписывается
+    });
+  }
+
+  cardEdit(card, editTiket) { // изменение карточки
+    this.cardDelete(card);
+    this.addCard(editTiket);
+  }
+
+  canselEdit(popup, card) { // закрывает всплывающее
+    popup.classList.add('hidden');
+    const popover = this.container.querySelector('.popover');
+    popover.classList.add('hidden');// иначе нижнее содержимое будет не активно
+
+    const editTiket = this.container.querySelector('.container_edit_tiket');
+    editTiket.querySelector('.tiket_text').value = '';
+    editTiket.querySelector('.tiket_description').value = '';
+    const btnOk = editTiket.querySelector('.popover_control_ok');
+    const btnCansel = editTiket.querySelector('.popover_control_cancel');
+
+    btnOk.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.cardEdit(card, editTiket);
+      this.canselEdit(editTiket, card);
+    });
+    btnCansel.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.canselEdit(editTiket, card);
+    });
+  }
+
+  cansel(popup) { // закрывает всплывающее
+    popup.classList.add('hidden');
+    const popover = this.container.querySelector('.popover');
+    popover.classList.add('hidden');// иначе нижнее содержимое будет не активно
+
+    const addTiket = this.container.querySelector('.container_add_tiket');
+    addTiket.querySelector('.tiket_text').value = '';
+    addTiket.querySelector('.tiket_description').value = '';
+
+    const btnOk = addTiket.querySelector('.popover_control_ok');
+    const btnCansel = addTiket.querySelector('.popover_control_cancel');
+    btnOk.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.addCard(addTiket);
+      this.cansel(addTiket);
+    });
+    btnCansel.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.cansel(addTiket);
+    });
+  }
+
+  canselDel(popup, card) { // закрывает всплывающее
+    popup.classList.add('hidden');
+    const popover = this.container.querySelector('.popover');
+    popover.classList.add('hidden');// иначе нижнее содержимое будет не активно
+
+    const delTiket = this.container.querySelector('.container_delete_tiket');
+    const btnOk = delTiket.querySelector('.popover_control_ok');
+    const btnCansel = delTiket.querySelector('.popover_control_cancel');
+
+    btnOk.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.cardDelete(card);
+      this.canselDel(delTiket, card);
+    });
+    btnCansel.removeEventListener('mousedown', (e) => {
+      e.preventDefault();
+      this.canselDel(delTiket, card);
+    });
   }
 }

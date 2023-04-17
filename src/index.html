@@ -1,16 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HelpDesk</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-  <div class="board">
-    <button class="btn btn-add-ticket">Добавить тикет</button>
+  <div class="container">
+    <div class="container_content">
+      <div class="card_add_control ">        
+        <button class="card_add">Добавить тикет</button>
+      </div>
+      <div class="cards">
+        <!-- 
+        <div class="card_content data-id_${id}">
+          <button class="card_not_done"></button>
+          <button class="card_done hidden">	&#10004;</button>
+          <div class="card_input">
+            <div class="card_text"></div>
+            <div class="card_description hidden"></div>
+          </div>
+          <button class="card_edit">&#9998;</button>
+          <button class="card_delete">&#10006;</button>       
+        </div>
+        -->
+      </div>
+    </div>
 
-    <div class="listTickets"></div>
+    <div class="popover hidden">
+    
+      <div class="container_add_tiket hidden">
+        <h1 class="tiket_h1">Добавить тикет</h1>
+        <h2 class="tiket_h2">Краткое описание</h2>
+        <textarea class="tiket_area tiket_text" type="text" placeholder="Enter a title for this card"></textarea>
+        <h2 class="tiket_h2">Подробное описание</h2>
+        <textarea class="tiket_area tiket_description" type="text" placeholder="Enter a description for this card"></textarea>
+        <div class="popover_control">
+          <button class="popover_control_cancel">Отмена</button>
+          <button class="popover_control_ok">Ok</button>
+        </div>
+      </div>
+
+      <div class="container_edit_tiket hidden">
+        <h1 class="tiket_h1">Изменить тикет</h1>
+        <h2 class="tiket_h2">Краткое описание</h2>
+        <textarea class="tiket_area tiket_text" type="text" placeholder="Enter a title for this card"></textarea>
+        <h2 class="tiket_h2">Подробное описание</h2>
+        <textarea class="tiket_area tiket_description" type="text" placeholder="Enter a description for this card"></textarea>
+        <div class="popover_control">
+          <button class="popover_control_cancel">Отмена</button>
+          <button class="popover_control_ok">Ok</button>
+        </div>
+      </div>
+
+      <div class="container_delete_tiket hidden">
+        <h1 class="tiket_h1">Удалить тикет</h1>
+        <span class="tiket_span">Вы уверены, что хотите удалить тикет? Это действие необратимо.</span>
+        <div class="popover_control">
+          <button class="popover_control_cancel">Отмена</button>
+          <button class="popover_control_ok">Ok</button>
+        </div>
+      </div>
+    
+    </div>
   </div>
+  
 </body>
 </html>

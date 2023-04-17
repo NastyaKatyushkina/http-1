@@ -1,6 +1,5 @@
-import HelpDesk from './HelpDesk';
+import CardManager from './helpDesk';
 
-const listTickets = document.querySelector('.listTickets');
+const cardManager = new CardManager();
 
-const helpDesk = new HelpDesk(listTickets);
-helpDesk.init();
+cardManager.bindToDOM(document.querySelector('.container'));
