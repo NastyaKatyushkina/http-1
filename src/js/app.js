@@ -1,4 +1,4 @@
-import CardManager from './helpDesk';
+import CardManager from './helpDesk.js';
 
 const cardManager = new CardManager();
 
