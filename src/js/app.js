@@ -1,5 +1,7 @@
-/* eslint-disable import/extensions */
-import Widget from './Widget';
+import control from './control';
 
-const helpDesk = new Widget(document.querySelector('.container'));
-helpDesk.bindToDOM();
+console.log('Test: app.js Hello!');
+
+control();
+
+

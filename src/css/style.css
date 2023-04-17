@@ -1,85 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background: linear-gradient(#bbb, transparent 1px),
-    linear-gradient(90deg, #bbb, transparent 1px);
-  background-size: 15px 15px;
-  background-position: center center;
+  color: rgb(6, 0, 87);
+  background-color: rgb(231, 231, 231);
+}
+
+.hidden {
+  display: none;
 }
 
 .container {
-  width: 800px;
-  margin: 100px auto 0 auto;
-  border: 1px solid black;
+  width: 100%;
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 10px;
+  background: url(../img/fon.jpg);
+  background-size: cover;
 }
-
-[data-widget="help-desk-widget"] *,
-.help-desk-modal-form * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Botton ticket add */
+.btn-add {
+  display: block;
+  padding: 10px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: 5%;
+  background-color: brown;
   border: none;
+  border-radius: 5px;
+  color: antiquewhite;
 
-  font-family: "Arial", sans-serif;
-  font-size: 16px;
-  line-height: 1.4;
-  color: black;
-  background-color: white;
+  transition-property: background-color, cursor;
+  transition-duration: 0.6s, 0.3s;
+  transition-timing-function: linear, linear;
 }
 
-[data-widget="help-desk-widget"] {
-  padding: 0 1em 1em 1em;
-  background-color: white;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1em 0;
-}
-
-.help-desk-button {
-  margin-left: 1em;
-  padding: 1em 1.5em;
-  border: 1px solid black;
+.btn-add:hover {
+  background-color: rgb(187, 116, 3);
   cursor: pointer;
 }
 
-.help-desk-ticket-button {
-  width: 2em;
-  height: 2em;
-  border: 1px solid black;
+/* Tickets */
+.cards {
+  width: 90%;
+  margin: 0 auto;
+  list-style-type: none;
+}
+
+/* ticet */
+.card {
+  display: flex;
+  flex-wrap: nowrap;
+
+  width: 100%;
+  min-height: 30px;
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+  margin-bottom: 4px;
+  padding-top: 3px;
+}
+
+.card__content {
+  padding: 0 10px;
+  flex: 1 70%;
+  cursor: pointer;
+}
+
+.card__header {
+  display: flex;
+}
+
+.card__name {
+  flex: 1 70%;
+}
+
+.card__description {
+  margin-top: 10px;
+}
+
+/* bottom Ticket */
+.btn__card {
+  width: 25px;
+  height: 25px;
+  margin: 0 2px;
+  border: 3px solid rgb(110, 109, 109);
   border-radius: 50%;
-  line-height: 0;
-  cursor: pointer;
+
+  transition-property: background-color, border;
+  transition-duration: 0.3s, 0.3s;
+  transition-timing-function: linear, linear;
 }
 
-.help-desk-button:hover,
-.help-desk-ticket-button:hover {
-  background-color: rgb(19, 204, 74);
+.btn__card:hover {
+  border: 2px solid rgb(46, 38, 38);
+  background-color: rgb(224, 164, 164);
 }
 
-[data-widget="help-desk-widget"] [data-id="ticket"] {
+/* popap */
+.popup {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 0.5em 2em 0.5em 0.5em;
-  border: 1px solid black;
-}
-
-[data-widget="help-desk-widget"] [data-id="ticket"]:not(:first-child) {
-  border-top: none;
-}
-
-[data-widget="help-desk-widget"] .text {
-  width: 60%;
-}
-
-[data-widget="help-desk-widget"] [data-id="description"] {
-  margin-top: 2em;
-}
-
-.help-desk-modal-form {
-  display: none;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -87,42 +109,67 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.modal-active {
-  display: flex;
+.form {
+  width: 400px;
+  /* height: 250px; */
+  border: 1px solid rgb(3, 160, 139);
+  border-radius: 15px;
+  background-color: rgb(241, 241, 241);
+  padding: 10px;
 }
 
-.help-desk-modal-form form {
-  width: 500px;
-  padding: 1.5em 1em 1em 1em;
-  border: 1px solid black;
-  overflow: hidden;
-}
-
-.help-desk-modal-form form * {
-  display: block;
-}
-
-.help-desk-modal-form [data-id="form-title"] {
-  margin-bottom: 1.5em;
+.form__title {
   text-align: center;
+  margin-bottom: 15px;
 }
 
-.help-desk-modal-form form input,
-.help-desk-modal-form form textarea {
+.form__name,
+.form__description {
   width: 100%;
-  margin: 1em 0;
-  padding: 0.5em;
-  border: 1px solid black;
+  margin: 5px 0;
+  padding: 2px;
+  border: 1px solid rgb(3, 160, 139);
+  border-radius: 3px;
 }
 
-.help-desk-modal-form form .buttons {
-  display: flex;
-  justify-content: flex-end;
+.form__name {
+  min-height: 25px;
 }
 
-[data-widget="delete-form"].help-desk-modal-form form .buttons {
-  margin-top: 1em;
+.form__description {
+  min-height: 60px;
+  resize: none
+}
+
+.form__btn {
+  text-align: right;
+}
+
+.btn__false, .btn__true {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn__false {
+  min-width: 60px;
+  background-color: rgb(255, 113, 180);
+}
+
+.btn__true {
+  min-width: 40px;
+  background-color: rgb(165, 250, 116);
+}
+
+.btn__false:hover {
+  background-color: rgb(255, 4, 121);
+
+}
+
+.btn__true:hover {
+  background-color: rgb(83, 221, 4);
 }
