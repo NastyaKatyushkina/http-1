@@ -1,232 +1,128 @@
-* {
+body {
+  background: linear-gradient(#bbb, transparent 1px),
+    linear-gradient(90deg, #bbb, transparent 1px);
+  background-size: 15px 15px;
+  background-position: center center;
+}
+
+.container {
+  width: 800px;
+  margin: 100px auto 0 auto;
+  border: 1px solid black;
+}
+
+[data-widget="help-desk-widget"] *,
+.help-desk-modal-form * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
- 
-.container {
-  width: 100vw;
-  min-height: 100vh;
-  background-color: #85b200;
-  background-image: url(../img/fon-tetradi-v-kletku-na-stole-35.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  border: none;
 
-  padding: 10% 15% 0 15%;
-  position: relative;
-}
-
-.container_content {
-  min-height: 100vh;
-}
-
-/*--кнопка добавить тикет-----*/
-.card_add_control {
-  margin: 2%;
-  float: right;
-}
-
-.card_add {
-  background-color: #dae785;
-  width: 30vh;
-  height: 10vh;
-  box-shadow: 10px 5px 5px #badf4e;
-  border-radius: 5px;
-  color: #274b0c;
-  border: 1px solid #7ed13f;
-  font-size: 22px;
-}
-
-.card_add:hover {
-  background-color: #7aa305;
-  box-shadow: 10px 5px 5px #5a9006;
-  color: #162c05;
-  border: 2px solid #162c05;
-  cursor: pointer;
-}
-
-/*---карточки---*/
-.cards {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 80px;
-  border: 1px solid rgb(32, 66, 18);
-  box-shadow: 10px 5px 5px rgb(29, 68, 21);
-  border-radius: 7px;
-}
-
-.card_content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content:space-between;
-  width: 100%;
-  min-height: 80px;
-  border-radius: 7px;
-  border: 1px solid rgb(32, 66, 18);
-  background-color: rgb(222, 230, 178);
-}
-
-.card_done, .card_not_done {
-  float: left;
-  background-color: rgb(233, 235, 227);
-  width: 30px;
-  height: 30px;
-  outline:none;
-  border: 1px solid rgb(8, 122, 18);
-  border-radius: 8px;
-  color: rgb(10, 153, 34);
-  margin: 10px;
-  font-size: 20px;
-}
-
-.card_input {
+  font-family: "Arial", sans-serif;
   font-size: 16px;
-  color: indigo;
-  padding: 20px;
+  line-height: 1.4;
+  color: black;
+  background-color: white;
 }
 
-.card_edit {
-  float: right;
-  background-color: rgb(215, 235, 99);
-  width: 30px;
-  height: 30px;
-  outline:none;
-  border: 1px solid rgb(205, 226, 18);
-  box-shadow: 7px 5px 5px rgb(162, 179, 12);
-  border-radius: 8px;
-  color: rgb(36, 8, 139);
-  margin: 10px;
-  font-size: 20px;
+[data-widget="help-desk-widget"] {
+  padding: 0 1em 1em 1em;
+  background-color: white;
 }
 
-.card_delete {
-  float: right;
-  background-color: rgb(235, 99, 99);
-  width: 30px;
-  height: 30px;
-  outline:none;
-  border: 1px solid rgb(218, 85, 85);
-  box-shadow: 7px 5px 5px rgb(148, 58, 58);
-  border-radius: 8px;
-  color: rgb(192, 30, 30);
-  margin: 10px;
-  font-size: 20px;
-}
-
-.card_delete:hover {
-  background-color: rgb(192, 30, 30);
-  border: 2px solid rgb(78, 6, 6);
-  box-shadow: 7px 5px 5px rgb(192, 30, 30);
-  color: rgb(78, 6, 6);
-  cursor: pointer;
-}
-
-.card_edit:hover {
-  background-color: rgb(239, 243, 4);
-  border: 2px solid rgb(2, 19, 2);
-  box-shadow: 7px 5px 5px rgb(120, 133, 2);
-  color: rgb(78, 6, 6);
-  cursor: pointer;
-}
-.card_done:hover, .card_not_done:hover {
-  background-color: rgb(19, 158, 43);
-  border: 2px solid rgb(18, 78, 6);
-  box-shadow: 7px 5px 5px rgb(10, 87, 36);
-  color: rgb(7, 31, 3);
-  cursor: pointer;
-}
-
-.card_input {
-  font-size: 20px;
-  color: navy;
-  width: 80%;
-}
-
-.card_text:hover {
-  cursor: help;
-  text-shadow: 5px 5px #558ABB;
-}
-
-.card_description {
-  margin-left: 10%;
-  white-space: pre-wrap;/*сохраняет переносы*/
-}
-
-/*----всплывающие ----*/
-.popover {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index:99;
-  color: #122007;
-}
-
-.container_add_tiket, .container_edit_tiket, .container_delete_tiket {
-  margin: 10% auto;
-  padding: 3%;
-  width: 50%;
+.header {
   display: flex;
-  flex-direction: column;
-  background-color: #95e785;
-  border: 1px solid rgb(32, 66, 18);
-  box-shadow: 10px 5px 5px rgb(29, 68, 21);
-  border-radius: 7px;
+  justify-content: flex-end;
+  padding: 1em 0;
 }
 
-.tiket_h1 {
-  text-align: center;
-  margin-bottom: 3%;
-}
-
-.tiket_h2 {
-  margin-bottom: 2%;
-  margin-top: 2%;
-}
-
-.tiket_area {
-  min-height: 80px;
-  border-radius: 7px;
-  padding: 20px;
-  resize: vertical;
-  max-height: 100px;
-}
-
-.popover_control {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content:end;
-}
-
-.tiket_span {
-  font-size: 22px;
-}
-
-.popover_control_cancel, .popover_control_ok {
-  margin: 4% 0 0 4%;
-  background-color: #41c935;
-  width: 20vh;
-  height: 7vh;
-  box-shadow: 10px 5px 5px #038a0a;
-  border-radius: 5px;
-  color: #0c4b14;
-  border: 1px solid #0c4b14;
-  font-size: 22px;
-}
-
-.popover_control_cancel:hover, .popover_control_ok:hover {
-  background-color: #0aa305;
-  box-shadow: 10px 5px 5px #065f03;
-  color: #122007;
-  border: 2px solid #122007;
+.help-desk-button {
+  margin-left: 1em;
+  padding: 1em 1.5em;
+  border: 1px solid black;
   cursor: pointer;
 }
 
-.hidden {
+.help-desk-ticket-button {
+  width: 2em;
+  height: 2em;
+  border: 1px solid black;
+  border-radius: 50%;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.help-desk-button:hover,
+.help-desk-ticket-button:hover {
+  background-color: rgb(19, 204, 74);
+}
+
+[data-widget="help-desk-widget"] [data-id="ticket"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5em 2em 0.5em 0.5em;
+  border: 1px solid black;
+}
+
+[data-widget="help-desk-widget"] [data-id="ticket"]:not(:first-child) {
+  border-top: none;
+}
+
+[data-widget="help-desk-widget"] .text {
+  width: 60%;
+}
+
+[data-widget="help-desk-widget"] [data-id="description"] {
+  margin-top: 2em;
+}
+
+.help-desk-modal-form {
   display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-active {
+  display: flex;
+}
+
+.help-desk-modal-form form {
+  width: 500px;
+  padding: 1.5em 1em 1em 1em;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.help-desk-modal-form form * {
+  display: block;
+}
+
+.help-desk-modal-form [data-id="form-title"] {
+  margin-bottom: 1.5em;
+  text-align: center;
+}
+
+.help-desk-modal-form form input,
+.help-desk-modal-form form textarea {
+  width: 100%;
+  margin: 1em 0;
+  padding: 0.5em;
+  border: 1px solid black;
+}
+
+.help-desk-modal-form form .buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+[data-widget="delete-form"].help-desk-modal-form form .buttons {
+  margin-top: 1em;
 }

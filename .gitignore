@@ -1,9 +1,6 @@
-.idea
-Thumbs.db*
-.DS_Store*
-HELP.md
-doc
 dist
+doc
+.idea
 
 # Logs
 logs

@@ -1,5 +1,5 @@
-import CardManager from './helpDesk.js';
+/* eslint-disable import/extensions */
+import Widget from './Widget';
 
-const cardManager = new CardManager();
-
-cardManager.bindToDOM(document.querySelector('.container'));
+const helpDesk = new Widget(document.querySelector('.container'));
+helpDesk.bindToDOM();
