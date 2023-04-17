@@ -24,7 +24,7 @@ export default class DeleteForm {
         <div class="buttons">
           <button class="help-desk-button" type="reset" data-id="${this.ctrlId.cancel}">Отмена</button>
           <button class="help-desk-button" type="submit" data-id="${this.ctrlId.ok}">Ok</button>
-        </div>
+        </div>      
       </form>
     `;
   }
